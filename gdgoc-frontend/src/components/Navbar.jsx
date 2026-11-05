@@ -4,7 +4,7 @@ import { Link, NavLink } from 'react-router-dom'
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
-  // Your navigation links
+  //Navigation Links
   const links = [
     { name: 'Home', to: '/' },
     { name: 'About', to: '/about' },
@@ -16,7 +16,7 @@ export default function Navbar() {
   const navLinkClass = ({ isActive }) =>
     `px-5 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
       isActive
-        ? 'bg-blue-50 text-blue-600' // The blue circle/pill thing when selected
+        ? 'bg-blue-50 text-blue-600' // The blue circle thing when selected
         : 'text-gray-500 hover:text-gray-900' // Normal state
     }`
 
@@ -24,7 +24,7 @@ export default function Navbar() {
     <nav className="font-sans bg-white w-full border-b border-gray-100 sticky top-0 z-50">
       <div className="max-w-[1400px] mx-auto px-6 h-20 flex items-center justify-between">
         
-        {/* LEFT SIDE: Logo and Text */}
+        {/* Logo and Text */}
         <Link to="/" className="flex items-center gap-4">
           {/* Logo */}
           <img 
@@ -48,7 +48,7 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* MIDDLE: Navigation Links */}
+        {/* Navigation Links */}
         <div className="hidden lg:flex items-center space-x-2">
           {links.map((link) => (
             <NavLink key={link.name} to={link.to} className={navLinkClass}>
@@ -57,7 +57,7 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* RIGHT SIDE: Call to Action Button */}
+        {/*Call to Action Button */}
         <div className="hidden lg:flex">
           <Link 
             to="/find-track" 
