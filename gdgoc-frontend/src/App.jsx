@@ -1,20 +1,11 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-import Navbar from "./components/Navbar";
-import Landing from "./pages/Landing";
-import Overview from "./pages/Overview";
+import Navbar from './components/Navbar' // adjust path if needed
 
 function App() {
   return (
-    <BrowserRouter>
+    <div>
       <Navbar />
-
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/overview" element={<Overview />} />
-      </Routes>
-    </BrowserRouter>
-  );
+    </div>
+  )
 }
 
-export default App;
+export default App

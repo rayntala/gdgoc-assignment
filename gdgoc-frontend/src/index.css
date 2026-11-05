@@ -1,1 +1,6 @@
 @import "tailwindcss";
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Google Sans Flex Variable", system-ui, sans-serif;
+}
