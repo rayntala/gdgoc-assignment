@@ -4,6 +4,7 @@ import { Link, NavLink } from 'react-router-dom'
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
+
   //Navigation Links
   const links = [
     { name: 'Home', to: '/' },
