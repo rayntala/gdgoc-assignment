@@ -1,15 +1,15 @@
 import Navbar from './components/Navbar';
-import Hero from './pages/Landing';
-import FeatureBar from './pages/FeatureBar';
-import Info from './pages/Info';
-import Tracks from './pages/Tracks';
-import Method from './pages/Method';  
-import Project from './pages/Project';
-import Steps from './pages/Steps';
-import Banner from './pages/Banner';
-import FAQ from './pages/FAQ';
-import CTA from './pages/CTA';
-import Footer from './pages/Footer';
+import Hero from './pages/LandingPage/Landing';
+import FeatureBar from './pages/LandingPage/FeatureBar';
+import Info from './pages/LandingPage/Info';
+import Tracks from './pages/LandingPage/Tracks';
+import Method from './pages/LandingPage/Method';  
+import Project from './pages/LandingPage/Project';
+import Steps from './pages/LandingPage/Steps';
+import Banner from './pages/LandingPage/Banner';
+import FAQ from './pages/LandingPage/FAQ';
+import CTA from './pages/LandingPage/CTA';
+import Footer from './pages/LandingPage/Footer';
 function App() {
   return (
     <div className="min-h-screen bg-white">

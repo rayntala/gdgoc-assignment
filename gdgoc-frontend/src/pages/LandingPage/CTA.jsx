@@ -1,7 +1,7 @@
 const CTA = () => {
   return (
     <section className="max-w-7xl mx-auto px-6 pb-24">
-      <div className="bg-blue-50 rounded-3xl p-10 md:p-16 flex flex-col md:flex-row justify-between items-center gap-8">
+      <div className="bg-blue-100 rounded-3xl p-10 md:p-16 flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="max-w-lg">
           <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-gray-500 uppercase mb-4">
             <span className="w-2 h-2 rounded-full bg-blue-500"></span> YOUR NEXT CHAPTER

@@ -5,7 +5,7 @@ const FAQ = () => {
         <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-gray-500 uppercase mb-4">
           <span className="w-2 h-2 rounded-full bg-blue-500"></span> A FEW GOOD QUESTIONS
         </div>
-        <h2 className="text-4xl font-semibold mb-6">Wondering where to begin?</h2>
+        <h2 className="text-6xl font-semibold mb-6">Wondering where to begin?</h2>
         <a href="#" className="text-brand-blue font-medium hover:opacity-70 transition">Ask us a question &rarr;</a>
       </div>
       
@@ -19,7 +19,7 @@ const FAQ = () => {
             <summary className="flex justify-between items-center font-medium text-lg cursor-pointer list-none">
               {item.q}
               <span className="text-2xl text-gray-400 font-light group-open:hidden">+</span>
-              <span className="text-2xl text-gray-400 font-light hidden group-open:inline">−</span>
+              <span className="text-2xl text-gray-400 font-light hidden group-open:inline">-</span>
             </summary>
             <p className="mt-4 text-gray-600 text-sm">{item.a}</p>
           </details>

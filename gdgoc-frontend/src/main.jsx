@@ -8,7 +8,7 @@ import '@fontsource-variable/google-sans-flex';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>   {/* 2. Wrap App with BrowserRouter */}
+    <BrowserRouter>   
       <App />
     </BrowserRouter>
   </React.StrictMode>,
