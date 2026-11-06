@@ -28,15 +28,19 @@ const Hero = () => {
         </div>
       </div>
       
-      {/*Graphic Placeholder*/}
-      <div className="flex-1 w-full min-h-[400px] bg-gradient-to-br from-blue-100 to-yellow-50 rounded-3xl flex items-center justify-center relative">
-        <div className="bg-white/40 backdrop-blur-md border border-white/60 p-10 rounded-2xl shadow-xl relative animate-float">
-          <div className="text-6xl font-bold text-green-600/80">&lt;/&gt;</div>
-          <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-4 py-2 rounded-lg text-sm font-medium shadow-md whitespace-nowrap">
-            hello, possibilities.
+        {/* Graphic */}
+        <div className="relative w-180 h-180">
+          <img 
+            src="src/assets/something2.png" 
+            alt="something" 
+            className="w-full h-full object-contain"
+          />
+          <div className="absolute bottom-75 left-40 -translate-x-1/2 animate-float">
+            <div className="bg-white px-4 py-2 rounded-lg text-sm font-medium shadow-md whitespace-nowrap">
+              hello, possibilities.
+            </div>
           </div>
         </div>
-      </div>
     </section>
   );
 };

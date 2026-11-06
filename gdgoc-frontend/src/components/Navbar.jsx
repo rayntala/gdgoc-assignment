@@ -26,20 +26,17 @@ export default function Navbar() {
         
         {/* Logo and Text */}
         <Link to="/" className="flex items-center gap-4">
-          {/* Logo */}
           <img 
-            src="src/assets/logo.jpeg" 
+            src="src/assets/logo.png" 
             alt="GDG Logo" 
             className="w-12 h-12 object-contain" 
           />
           
           {/* Text Stack */}
           <div className="flex flex-col justify-center">
-            {/* Top Line */}
             <span className="text-xl font-semibold text-gray-800 leading-tight">
               Google Developer Groups
             </span>
-            {/* Bottom Line */}
             <div className="flex items-center text-sm">
               <span className="text-blue-500 font-medium">On Campus</span>
               <span className="text-gray-400 mx-1">•</span>
@@ -64,14 +61,13 @@ export default function Navbar() {
             className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium flex items-center gap-2 transition-colors"
           >
             Find your track
-            {/* Arrow Icon */}
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </Link>
         </div>
 
-        {/* MOBILE MENU BUTTON (For small screens) */}
+        {/*mobile menu button*/}
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="lg:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-md"
@@ -82,7 +78,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* MOBILE DROPDOWN */}
+      {/* mobile dropdown */}
       {isOpen && (
         <div className="lg:hidden px-4 pt-2 pb-4 space-y-1 bg-white border-t border-gray-100">
           {links.map((link) => (

@@ -3,8 +3,6 @@
 @theme {
   --font-sans: "Google Sans Flex Variable", system-ui, sans-serif;
 }
-
-
 @theme {
   /*Custom colors*/
   --color-brand-blue: #2563EB;
@@ -24,3 +22,4 @@
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
+
