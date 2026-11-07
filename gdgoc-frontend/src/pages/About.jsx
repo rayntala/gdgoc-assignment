@@ -1,11 +1,44 @@
-import diamondyIcon from "../assets/diamondy.png";
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowRight, BookOpen, Users, Code, Heart } from 'lucide-react';
+import diamondyIcon from "../assets/diamondy.png";
 
 const AboutPage = () => {
+  const [values, setValues] = useState([]);
+  const [roles, setRoles] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAboutData = async () => {
+      try {
+        // Fetch values and roles in parallel
+        const [valuesRes, rolesRes] = await Promise.all([
+          fetch('https://gdgoc-ugm-api.vercel.app/api/values'),
+          fetch('https://gdgoc-ugm-api.vercel.app/api/roles')
+        ]);
+        
+        const valuesData = await valuesRes.json();
+        const rolesData = await rolesRes.json();
+
+        setValues(valuesData.data);
+        setRoles(rolesData.data);
+      } catch (error) {
+        console.error("Error fetching About data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAboutData();
+  }, []);
+
+  // Show a loading state while fetching API data
+  if (loading) return <div className="text-center py-20 min-h-screen">Loading...</div>;
+
   return (
     <main className="bg-white min-h-screen font-sans">
       
-      {/*hero section*/}
+      {/* 1. HERO SECTION */}
       <section className="max-w-7xl mx-auto px-6 py-20 md:py-32 flex flex-col lg:flex-row items-center gap-16">
         <div className="flex-1 max-w-2xl">
           <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-gray-500 uppercase mb-6">
@@ -26,17 +59,19 @@ const AboutPage = () => {
           </p>
         </div>
         
-        {/*Graphic*/}
+        {/* Graphic */}
         <div className="flex-1 w-full flex justify-end">
-        <div className="w-full max-w-[560px] aspect-square rounded-[2.5rem] shadow-sm border border-gray-100 overflow-hidden relative bg-white">
+          <div className="w-full max-w-[560px] aspect-square rounded-[2.5rem] shadow-sm border border-gray-100 overflow-hidden relative bg-white">
             <img
-            src="src/assets/about.png"
-            alt="About"
-            className="w-full h-full object-cover"
+              src="src/assets/about.png"
+              alt="About GDGoC"
+              className="w-full h-full object-cover"
             />
+          </div>
         </div>
-        </div>
-        </section>
+      </section>
+
+      {/* 2. WHY WE COME TOGETHER */}
       <section className="bg-gray-100 py-24">
         <div className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row gap-12 lg:gap-24">
           <div className="flex-1">
@@ -64,6 +99,7 @@ const AboutPage = () => {
         </div>
       </section>
 
+      {/* 3. WHAT GUIDES US (API DATA) */}
       <section className="max-w-7xl mx-auto px-6 py-24">
         <div className="mb-12">
           <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-gray-500 uppercase mb-4">
@@ -75,21 +111,24 @@ const AboutPage = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            { icon: BookOpen, title: 'Stay curious', desc: 'Ask the extra question. Be willing to learn something outside your comfort zone.', color: 'text-blue-500', border: 'border-t-blue-500' },
-            { icon: Users, title: 'Make room', desc: 'Welcome different perspectives, respect each other, and help people find their voice.', color: 'text-red-500', border: 'border-t-red-500' },
-            { icon: Code, title: 'Learn by building', desc: 'Try a small experiment. Share the rough version. Let feedback guide what comes next.', color: 'text-yellow-500', border: 'border-t-yellow-500' },
-            { icon: Heart, title: 'Give something back', desc: 'Share a resource, explain what clicked, or help someone take their next step.', color: 'text-green-500', border: 'border-t-green-500' },
-          ].map((value, idx) => (
-            <div key={idx} className={`bg-white p-8 rounded-2xl border border-gray-200 shadow-sm border-t-4 ${value.border} flex flex-col`}>
-              <value.icon className={`w-6 h-6 mb-6 ${value.color}`} strokeWidth={2} />
-              <h3 className="text-xl font-semibold mb-3 text-gray-900">{value.title}</h3>
-              <p className="text-sm text-gray-600 leading-relaxed">{value.desc}</p>
-            </div>
-          ))}
+          {values.map((value, idx) => {
+            const icons = [BookOpen, Users, Code, Heart];
+            const Icon = icons[idx % icons.length];
+
+            return (
+              <div key={value.id} className="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm flex flex-col border-t-4" style={{ borderTopColor: value.color }}>
+                <div className="mb-6" style={{ color: value.color }}>
+                  <Icon className="w-6 h-6" strokeWidth={2} />
+                </div>
+                <h3 className="text-xl font-semibold mb-3 text-gray-900">{value.title}</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">{value.description}</p>
+              </div>
+            );
+          })}
         </div>
       </section>
 
+      {/* 4. PEOPLE, NOT LABELS (API DATA) */}
       <section className="max-w-7xl mx-auto px-6 pb-24 pt-8">
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
           <div className="flex-1">
@@ -106,36 +145,29 @@ const AboutPage = () => {
 
           <div className="flex-1">
             <div className="border-t border-gray-200">
-              <div className="py-8 border-b border-gray-200">
-                <h3 className="text-xl font-semibold mb-2 text-gray-900">Come as a learner</h3>
-                <p className="text-gray-600">Explore a topic, join a discussion, and ask the question that's been on your mind.</p>
-              </div>
-              <div className="py-8 border-b border-gray-200">
-                <h3 className="text-xl font-semibold mb-2 text-gray-900">Grow as a collaborator</h3>
-                <p className="text-gray-600">Work with people whose skills complement yours. Discover what you can build together.</p>
-              </div>
-              <div className="py-8 border-b border-gray-200 mb-8">
-                <h3 className="text-xl font-semibold mb-2 text-gray-900">Give back as a contributor</h3>
-                <p className="text-gray-600">Share knowledge, support a learning session, or bring an idea for the community.</p>
-              </div>
+              {roles.map((role) => (
+                <div key={role.id} className="py-8 border-b border-gray-200 last:border-b-0">
+                  <h3 className="text-xl font-semibold mb-2 text-gray-900">{role.title}</h3>
+                  <p className="text-gray-600">{role.description}</p>
+                </div>
+              ))}
             </div>
             
-            <a href="#" className="inline-flex items-center gap-2 text-blue-600 font-semibold hover:opacity-70 transition">
+            <Link to="/contact" className="inline-flex items-center gap-2 text-blue-600 font-semibold hover:opacity-70 transition mt-8">
               Let's talk about getting involved <ArrowRight className="w-4 h-4" />
-            </a>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* banner */}
+      {/* 5. BANNER */}
       <section className="bg-[#FFFBF0] py-16 border-y border-yellow-100">
-        <div className="flex items-start gap-4 md:gap-6"> {/* Ensures the icon aligns nicely with the text */}
-          {/*Icon */}
+        <div className="max-w-7xl mx-auto px-6 flex items-start gap-4 md:gap-6">
           <div className="shrink-0 pt-1">
             <img 
               src={diamondyIcon} 
               alt="Diamondy Icon" 
-              className="w-15 h-15 object-contain" 
+              className="w-12 h-12 object-contain" 
             />
           </div>
           <div>
@@ -147,8 +179,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-
-      {/*CTA Section*/}
+      {/* 6. CTA SECTION */}
       <section className="max-w-7xl mx-auto px-6 py-24">
         <div className="bg-[#F0F5FF] rounded-[2.5rem] p-10 md:p-16 flex flex-col md:flex-row justify-between items-center gap-10">
           <div className="max-w-xl">
@@ -162,12 +193,12 @@ const AboutPage = () => {
           </div>
           
           <div className="flex flex-col items-center md:items-end gap-4 shrink-0">
-            <button className="bg-blue-600 text-white px-8 py-3.5 rounded-lg font-medium hover:bg-blue-700 transition flex items-center gap-2 w-full md:w-auto justify-center">
+            <Link to="/overview" className="bg-blue-600 text-white px-8 py-3.5 rounded-lg font-medium hover:bg-blue-700 transition flex items-center gap-2 w-full md:w-auto justify-center">
               Explore the overview <ArrowRight className="w-4 h-4" />
-            </button>
-            <a href="#" className="text-blue-600 font-semibold hover:opacity-70 transition flex items-center gap-2">
+            </Link>
+            <Link to="/contact" className="text-blue-600 font-semibold hover:opacity-70 transition flex items-center gap-2">
               Talk to the community <ArrowRight className="w-4 h-4" />
-            </a>
+            </Link>
           </div>
         </div>
       </section>
