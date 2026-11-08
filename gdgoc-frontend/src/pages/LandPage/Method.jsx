@@ -1,23 +1,19 @@
-import BookIcon from '../../assets/boook.png';
-import LeftRightIcon from '../../assets/leftright.png';
-import PplIcon from '../../assets/ppl.png';
-
 const Method = () => {
   const methods = [
     { 
-      icon: BookIcon, 
+      icon: '/boook.png', 
       title: 'Study together', 
       desc: 'Work through foundations in peer learning sessions. Bring your questions; leave with a next step.', 
       tag: 'Study groups & guided practice' 
     },
     { 
-      icon: LeftRightIcon, 
+      icon: '/leftright.png', 
       title: 'Try it hands-on', 
       desc: 'Explore a tool or technique in a workshop, then put it to work in a small experiment.', 
       tag: 'Workshops & technical sessions' 
     },
     { 
-      icon: PplIcon, 
+      icon: '/ppl.png', 
       title: 'Share the process', 
       desc: 'Exchange feedback, explain your decisions, and learn from different ways of thinking.', 
       tag: 'Project circles & sharing sessions' 

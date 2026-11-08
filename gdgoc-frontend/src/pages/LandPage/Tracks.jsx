@@ -1,12 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import Magnify from '../../assets/magnify.png';
-import Paintbrush from '../../assets/Paintbrush.png';
-import Code from '../../assets/Code.png';
-import Hustler from '../../assets/Hustler.png';
-import UI from '../../assets/UI.png';
-import Hacker from '../../assets/Hacker.png';
 
 const Tracks = () => {
   return (
@@ -28,8 +22,8 @@ const Tracks = () => {
         {/* Card 1: Research */}
         <div className="border border-gray-200 rounded-[2rem] bg-white flex flex-col h-full relative overflow-visible">
           <div className="h-56 flex items-center justify-center relative rounded-t-[2rem] overflow-hidden bg-gradient-to-b from-blue-100 via-blue-50 to-white">
-            <img src={Hustler} alt="bg" className="absolute left-1/2 -translate-x-1/2 top-2/2 -translate-y-1/2 w-500 h-500 object-contain scale-120 z-0 opacity-50 mix-blend-multiply pointer-events-none" />
-            <img src={Magnify} alt="icon" className="relative z-10 w-32 h-32 object-contain animate-float drop-shadow-md" style={{ animationDelay: '0s' }} />
+            <img src="/Hustler.png" alt="bg" className="absolute left-1/2 -translate-x-1/2 top-2/2 -translate-y-1/2 w-500 h-500 object-contain scale-120 z-0 opacity-50 mix-blend-multiply pointer-events-none" />
+            <img src="/magnify.png" alt="icon" className="relative z-10 w-32 h-32 object-contain animate-float drop-shadow-md" style={{ animationDelay: '0s' }} />
             <div className="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-white to-transparent z-0"></div>
           </div>
           <div className="p-8 flex flex-col flex-grow relative z-10 bg-white rounded-b-[2rem]">
@@ -49,8 +43,8 @@ const Tracks = () => {
         {/* Card 2: Design */}
         <div className="border border-gray-200 rounded-[2rem] bg-white flex flex-col h-full relative overflow-visible">
           <div className="h-56 flex items-center justify-center relative rounded-t-[2rem] overflow-hidden bg-gradient-to-b from-amber-100 via-amber-50 to-white">
-            <img src={UI} alt="bg" className="absolute left-1/2 -translate-x-1/2 top-2/2 -translate-y-1/2 w-500 h-500 object-contain scale-120 z-0 opacity-50 mix-blend-multiply pointer-events-none" />
-            <img src={Paintbrush} alt="icon" className="relative z-10 w-32 h-32 object-contain animate-float drop-shadow-md" style={{ animationDelay: '1s' }} />
+            <img src="/UI.png" alt="bg" className="absolute left-1/2 -translate-x-1/2 top-2/2 -translate-y-1/2 w-500 h-500 object-contain scale-120 z-0 opacity-50 mix-blend-multiply pointer-events-none" />
+            <img src="/Paintbrush.png" alt="icon" className="relative z-10 w-32 h-32 object-contain animate-float drop-shadow-md" style={{ animationDelay: '1s' }} />
             <div className="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-white to-transparent z-0"></div>
           </div>
           <div className="p-8 flex flex-col flex-grow relative z-10 bg-white rounded-b-[2rem]">
@@ -70,8 +64,8 @@ const Tracks = () => {
         {/* Card 3: Development */}
         <div className="border border-gray-200 rounded-[2rem] bg-white flex flex-col h-full relative overflow-visible">
           <div className="h-56 flex items-center justify-center relative rounded-t-[2rem] overflow-hidden bg-gradient-to-b from-emerald-100 via-emerald-50 to-white">
-            <img src={Hacker} alt="bg" className="absolute left-1/2 -translate-x-1/2 top-2/2 -translate-y-1/2 w-500 h-500 object-contain scale-120 z-0 opacity-50 mix-blend-multiply pointer-events-none" />
-            <img src={Code} alt="icon" className="relative z-10 w-32 h-32 object-contain animate-float drop-shadow-md" style={{ animationDelay: '2s' }} />
+            <img src="/Hacker.png" alt="bg" className="absolute left-1/2 -translate-x-1/2 top-2/2 -translate-y-1/2 w-500 h-500 object-contain scale-120 z-0 opacity-50 mix-blend-multiply pointer-events-none" />
+            <img src="/Code.png" alt="icon" className="relative z-10 w-32 h-32 object-contain animate-float drop-shadow-md" style={{ animationDelay: '2s' }} />
             <div className="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-white to-transparent z-0"></div>
           </div>
           <div className="p-8 flex flex-col flex-grow relative z-10 bg-white rounded-b-[2rem]">

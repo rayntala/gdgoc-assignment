@@ -4,7 +4,7 @@ const Banner = () => {
     <section className="bg-green-100 py-17">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row gap-8 items-start">
           <img 
-            src="src/assets/diamond.png" 
+            src="/diamond.png" 
             alt="Diamond Icon" 
             className="w-25 h-25 object-contain" 
           />

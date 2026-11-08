@@ -3,14 +3,6 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { ArrowRight, ArrowDown, X } from 'lucide-react';
 import { getTracks, getFormats, getJourney, getRoles } from '../services/api';
 
-import Huster from '../assets/Huster.png';
-import Hustler from '../assets/Hustler.png';
-import Magnify from '../assets/magnify.png';
-import UI from '../assets/UI.png';
-import Paintbrush from '../assets/Paintbrush.png';
-import Hacker from '../assets/Hacker.png';
-import Code from '../assets/Code.png';
-
 const OverviewPage = () => {
   const [data, setData] = useState({
     tracks: [],
@@ -21,12 +13,12 @@ const OverviewPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // --- NEW: Track Detail Modal State ---
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedTrackId = searchParams.get('track');
   const [trackDetail, setTrackDetail] = useState(null);
   const [detailLoading, setDetailLoading] = useState(false);
 
+  // Fetch all overview data
   useEffect(() => {
     const fetchAllData = async () => {
       try {
@@ -48,7 +40,7 @@ const OverviewPage = () => {
     fetchAllData();
   }, []);
 
-  // --- NEW: Fetch Single Track Data when URL changes ---
+  // Fetch Single Track Data when URL changes 
   useEffect(() => {
     if (!selectedTrackId) {
       setTrackDetail(null);
@@ -86,7 +78,7 @@ const OverviewPage = () => {
   return (
     <main className="bg-white min-h-screen font-sans pb-0 scroll-smooth relative">
       
-      {/* --- NEW: THE MODAL POPUP --- */}
+      {/* Track Detail Modal */}
       {selectedTrackId && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl max-w-2xl w-full p-8 md:p-12 relative shadow-2xl animate-in fade-in zoom-in duration-200">
@@ -153,11 +145,8 @@ const OverviewPage = () => {
 
           {/* Graphic */}
           <div className="relative flex justify-end items-center">
-            <img 
-              src={Huster} 
-              alt="Graphic" 
-              className="w-auto h-[250px] md:h-[500px] object-contain drop-shadow-sm" 
-            />
+            {/* Updated to point to public folder */}
+            <img src="/Huster.png" alt="Graphic" className="w-auto h-[250px] md:h-[500px] object-contain drop-shadow-sm" />
           </div>
 
         </div>
@@ -197,19 +186,20 @@ const OverviewPage = () => {
           
           {/* Dynamically map through API tracks */}
           {data.tracks.map((track) => {
+
             let bgImg, floatImg, gradientClass, textColor;
             let animDelay = '0s';
 
             if (track.id === 'research-discovery') {
-              bgImg = Hustler; floatImg = Magnify;
+              bgImg = '/Hustler.png'; floatImg = '/magnify.png';
               gradientClass = 'from-blue-100 via-blue-50 to-white';
               textColor = 'text-blue-600'; animDelay = '0s';
             } else if (track.id === 'design-creativity') {
-              bgImg = UI; floatImg = Paintbrush;
+              bgImg = '/UI.png'; floatImg = '/Paintbrush.png';
               gradientClass = 'from-amber-100 via-amber-50 to-white';
               textColor = 'text-amber-600'; animDelay = '1s';
             } else if (track.id === 'development') {
-              bgImg = Hacker; floatImg = Code;
+              bgImg = '/Hacker.png'; floatImg = '/Code.png';
               gradientClass = 'from-emerald-100 via-emerald-50 to-white';
               textColor = 'text-emerald-600'; animDelay = '2s';
             }

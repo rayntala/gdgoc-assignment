@@ -42,7 +42,7 @@ const Hero = () => {
           </Link>
         </div>
         
-        {/* DYNAMIC STATS ROW from /api/stats */}
+        {/* dynamic stats from /api/stats */}
         {stats && (
           <div className="flex flex-wrap gap-6 mt-8 pt-8 border-t border-gray-100">
             <div>
@@ -71,11 +71,7 @@ const Hero = () => {
       
       {/* Graphic */}
       <div className="relative w-full max-w-[600px] aspect-square lg:w-[600px] lg:h-[600px] flex items-center justify-center">
-        <img 
-          src="src/assets/something2.png" 
-          alt="something" 
-          className="w-full h-full object-contain"
-        />
+        <img src="/something2.png" alt="something" className="w-full h-full object-contain" />
         <div className="absolute bottom-[40%] left-[10%] animate-float">
           <div className="bg-white px-6 py-3 rounded-lg text-lg font-medium shadow-md whitespace-nowrap">
             hello, possibilities_

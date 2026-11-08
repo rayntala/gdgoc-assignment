@@ -40,11 +40,7 @@ export default function Navbar() {
         
         {/* Logo and Text */}
         <Link to="/" className="flex items-center gap-4">
-          <img 
-            src="src/assets/logo.png" 
-            alt="GDG Logo" 
-            className="w-12 h-12 object-contain" 
-          />
+          <img src="/logo.png" alt="GDG Logo" className="w-12 h-12 object-contain" />
           
           <div className="flex flex-col justify-center">
             <span className="text-xl font-semibold text-gray-800 leading-tight">

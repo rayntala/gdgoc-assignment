@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, BookOpen, Users, Code, Heart } from 'lucide-react';
-import diamondyIcon from "../assets/diamondy.png";
 
 const AboutPage = () => {
   const [values, setValues] = useState([]);
@@ -62,11 +61,7 @@ const AboutPage = () => {
         {/* Graphic */}
         <div className="flex-1 w-full flex justify-end">
           <div className="w-full max-w-[560px] aspect-square rounded-[2.5rem] shadow-sm border border-gray-100 overflow-hidden relative bg-white">
-            <img
-              src="src/assets/about.png"
-              alt="About GDGoC"
-              className="w-full h-full object-cover"
-            />
+            <img src="/about.png" alt="About GDGoC" className="w-full h-full object-cover" />
           </div>
         </div>
       </section>
@@ -162,11 +157,7 @@ const AboutPage = () => {
       <section className="bg-[#FFFBF0] py-16 border-y border-yellow-100">
         <div className="max-w-7xl mx-auto px-6 flex items-start gap-4 md:gap-6">
           <div className="shrink-0 pt-1">
-            <img 
-              src={diamondyIcon} 
-              alt="Diamondy Icon" 
-              className="w-12 h-12 object-contain" 
-            />
+            <img src="/diamondy.png" alt="Diamondy Icon" className="w-12 h-12 object-contain" />
           </div>
           <div>
             <h2 className="text-2xl md:text-3xl font-semibold mb-3 text-gray-900">A space to learn. A responsibility to care.</h2>
