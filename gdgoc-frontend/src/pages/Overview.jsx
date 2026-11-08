@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowDown } from 'lucide-react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { ArrowRight, ArrowDown, X } from 'lucide-react';
 import { getTracks, getFormats, getJourney, getRoles } from '../services/api';
 
 import Huster from '../assets/Huster.png';
@@ -20,6 +20,12 @@ const OverviewPage = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // --- NEW: Track Detail Modal State ---
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedTrackId = searchParams.get('track');
+  const [trackDetail, setTrackDetail] = useState(null);
+  const [detailLoading, setDetailLoading] = useState(false);
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -42,18 +48,31 @@ const OverviewPage = () => {
     fetchAllData();
   }, []);
 
-  // Helper to map API track IDs to the correct local images and colors
-  const getTrackAssets = (id) => {
-    switch (id) {
-      case 'research-discovery':
-        return { bg: Hustler, float: Magnify, gradient: 'from-blue-100 via-blue-50 to-white', color: 'text-blue-600', link: 'text-blue-600' };
-      case 'design-creativity':
-        return { bg: UI, float: Paintbrush, gradient: 'from-amber-100 via-amber-50 to-white', color: 'text-amber-600', link: 'text-amber-600' };
-      case 'development':
-        return { bg: Hacker, float: Code, gradient: 'from-emerald-100 via-emerald-50 to-white', color: 'text-emerald-600', link: 'text-emerald-600' };
-      default:
-        return { bg: Hustler, float: Magnify, gradient: 'from-gray-100 to-white', color: 'text-gray-600', link: 'text-gray-600' };
+  // --- NEW: Fetch Single Track Data when URL changes ---
+  useEffect(() => {
+    if (!selectedTrackId) {
+      setTrackDetail(null);
+      return;
     }
+
+    const fetchSingleTrack = async () => {
+      setDetailLoading(true);
+      try {
+        const res = await fetch(`https://gdgoc-ugm-api.vercel.app/api/tracks/${selectedTrackId}`);
+        const result = await res.json();
+        if (result.success) setTrackDetail(result.data);
+      } catch (error) {
+        console.error("Failed to fetch track detail", error);
+      } finally {
+        setDetailLoading(false);
+      }
+    };
+
+    fetchSingleTrack();
+  }, [selectedTrackId]);
+
+  const closeDetail = () => {
+    setSearchParams({}); 
   };
 
   if (loading) {
@@ -65,9 +84,55 @@ const OverviewPage = () => {
   }
 
   return (
-    <main className="bg-white min-h-screen font-sans pb-0 scroll-smooth">
+    <main className="bg-white min-h-screen font-sans pb-0 scroll-smooth relative">
       
-        {/* header */}
+      {/* --- NEW: THE MODAL POPUP --- */}
+      {selectedTrackId && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-2xl w-full p-8 md:p-12 relative shadow-2xl animate-in fade-in zoom-in duration-200">
+            <button 
+              onClick={closeDetail}
+              className="absolute top-6 right-6 p-2 bg-gray-100 hover:bg-gray-200 rounded-full transition"
+            >
+              <X className="w-6 h-6 text-gray-600" />
+            </button>
+
+            {detailLoading ? (
+              <div className="text-center py-20 text-gray-500">Loading track details...</div>
+            ) : trackDetail ? (
+              <div>
+                <div className="text-6xl mb-6">{trackDetail.icon}</div>
+                <h2 className="text-4xl font-bold mb-2">{trackDetail.name}</h2>
+                <p className="text-blue-600 font-semibold mb-6">{trackDetail.tagline}</p>
+                
+                <p className="text-gray-700 text-lg mb-8 leading-relaxed">{trackDetail.description}</p>
+                
+                <div className="mb-8">
+                  <h4 className="text-sm font-bold tracking-wider text-gray-500 uppercase mb-3">What you will do</h4>
+                  <p className="text-gray-800 bg-blue-50 p-4 rounded-xl">{trackDetail.what_you_do}</p>
+                </div>
+
+                <div className="mb-8">
+                  <h4 className="text-sm font-bold tracking-wider text-gray-500 uppercase mb-3">Skills you will build</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {trackDetail.skills.map((skill, i) => (
+                      <span key={i} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium">{skill}</span>
+                    ))}
+                  </div>
+                </div>
+
+                <button onClick={closeDetail} className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+                  Close Details
+                </button>
+              </div>
+            ) : (
+              <div className="text-center py-20 text-red-500">Failed to load details.</div>
+            )}
+          </div>
+        </div>
+      )}
+      
+      {/* header */}
       <section className="max-w-[1400px] mx-auto px-6 pt-0 pb-0">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           
@@ -98,7 +163,7 @@ const OverviewPage = () => {
         </div>
       </section>
       
-      {/* sub navigation*/}
+      {/* sub navigation */}
       <section className="border-y border-gray-100 bg-white">
         <div className="max-w-[1400px] mx-auto px-6 flex items-center gap-10 h-14 overflow-x-auto whitespace-nowrap scrollbar-hide">
           <a href="#tracks" className="text-sm font-semibold text-blue-600 flex items-center gap-2 hover:opacity-80 transition">
@@ -129,68 +194,56 @@ const OverviewPage = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          {/* Card 1 */}
-          <div className="border border-gray-200 rounded-[2rem] bg-white flex flex-col h-full relative overflow-visible hover:shadow-lg transition duration-200">
-            <div className="h-56 flex items-center justify-center relative rounded-t-[2rem] overflow-hidden bg-gradient-to-b from-blue-100 via-blue-50 to-white">
-              <img src={Hustler} alt="bg" className="absolute left-1/2 -translate-x-1/2 top-2/2 -translate-y-1/2 w-500 h-500 object-contain scale-125 z-0 opacity-50 mix-blend-multiply pointer-events-none" />
-              <img src={Magnify} alt="icon" className="relative z-10 w-32 h-32 object-contain animate-float drop-shadow-md" style={{ animationDelay: '0s' }} />
-              <div className="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-white to-transparent z-0"></div>
-            </div>
-            <div className="p-8 flex flex-col flex-grow relative z-10 bg-white rounded-b-[2rem]">
-              <span className="text-xs font-bold tracking-wide mb-3 block text-blue-600">EXPLORE THE WHY</span>
-              <h3 className="text-2xl font-semibold mb-4 text-gray-900">Research & discovery</h3>
-              <p className="text-[15px] text-gray-600 mb-8 flex-grow leading-relaxed">
-                Ask better questions, understand people, and turn insight into a clear problem worth solving.
-              </p>
-              <hr className="border-gray-200 mb-4" />
-              <p className="text-sm text-gray-500 mb-6 font-medium">Problem framing · User research · Product thinking</p>
-              <Link to="/overview?track=research-discovery" className="font-semibold text-[15px] transition hover:opacity-70 flex items-center gap-2 text-blue-600">
-                Explore this track <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
+          
+          {/* Dynamically map through API tracks */}
+          {data.tracks.map((track) => {
+            let bgImg, floatImg, gradientClass, textColor;
+            let animDelay = '0s';
 
-          {/* Card 2 */}
-          <div className="border border-gray-200 rounded-[2rem] bg-white flex flex-col h-full relative overflow-visible hover:shadow-lg transition duration-200">
-            <div className="h-56 flex items-center justify-center relative rounded-t-[2rem] overflow-hidden bg-gradient-to-b from-amber-100 via-amber-50 to-white">
-              <img src={UI} alt="bg" className="absolute left-1/2 -translate-x-1/2 top-2/2 -translate-y-1/2 w-500 h-500 object-contain scale-120 z-0 opacity-50 mix-blend-multiply pointer-events-none" />
-              <img src={Paintbrush} alt="icon" className="relative z-10 w-32 h-32 object-contain animate-float drop-shadow-md" style={{ animationDelay: '1s' }} />
-              <div className="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-white to-transparent z-0"></div>
-            </div>
-            <div className="p-8 flex flex-col flex-grow relative z-10 bg-white rounded-b-[2rem]">
-              <span className="text-xs font-bold tracking-wide mb-3 block text-amber-600">MAKE IT MEANINGFUL</span>
-              <h3 className="text-2xl font-semibold mb-4 text-gray-900">Design & creativity</h3>
-              <p className="text-[15px] text-gray-600 mb-8 flex-grow leading-relaxed">
-                Translate ideas into thoughtful experiences, from a first sketch to a prototype people can use.
-              </p>
-              <hr className="border-gray-200 mb-4" />
-              <p className="text-sm text-gray-500 mb-6 font-medium">UI/UX · Visual storytelling · Prototyping</p>
-              <Link to="/overview?track=design-creativity" className="font-semibold text-[15px] transition hover:opacity-70 flex items-center gap-2 text-amber-600">
-                Explore this track <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
+            if (track.id === 'research-discovery') {
+              bgImg = Hustler; floatImg = Magnify;
+              gradientClass = 'from-blue-100 via-blue-50 to-white';
+              textColor = 'text-blue-600'; animDelay = '0s';
+            } else if (track.id === 'design-creativity') {
+              bgImg = UI; floatImg = Paintbrush;
+              gradientClass = 'from-amber-100 via-amber-50 to-white';
+              textColor = 'text-amber-600'; animDelay = '1s';
+            } else if (track.id === 'development') {
+              bgImg = Hacker; floatImg = Code;
+              gradientClass = 'from-emerald-100 via-emerald-50 to-white';
+              textColor = 'text-emerald-600'; animDelay = '2s';
+            }
 
-          {/* Card 3 */}
-          <div className="border border-gray-200 rounded-[2rem] bg-white flex flex-col h-full relative overflow-visible hover:shadow-lg transition duration-200">
-            <div className="h-56 flex items-center justify-center relative rounded-t-[2rem] overflow-hidden bg-gradient-to-b from-emerald-100 via-emerald-50 to-white">
-              <img src={Hacker} alt="bg" className="absolute left-1/2 -translate-x-1/2 top-2/2 -translate-y-1/2 w-500 h-500 object-contain scale-120 z-0 opacity-50 mix-blend-multiply pointer-events-none" />
-              <img src={Code} alt="icon" className="relative z-10 w-32 h-32 object-contain animate-float drop-shadow-md" style={{ animationDelay: '2s' }} />
-              <div className="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-white to-transparent z-0"></div>
-            </div>
-            <div className="p-8 flex flex-col flex-grow relative z-10 bg-white rounded-b-[2rem]">
-              <span className="text-xs font-bold tracking-wide mb-3 block text-emerald-600">BRING IDEAS TO LIFE</span>
-              <h3 className="text-2xl font-semibold mb-4 text-gray-900">Development</h3>
-              <p className="text-[15px] text-gray-600 mb-8 flex-grow leading-relaxed">
-                Learn the tools, write the code, and build useful things with people who enjoy figuring it out.
-              </p>
-              <hr className="border-gray-200 mb-4" />
-              <p className="text-sm text-gray-500 mb-6 font-medium">Web & mobile · Cloud · AI foundations</p>
-              <Link to="/overview?track=development" className="font-semibold text-[15px] transition hover:opacity-70 flex items-center gap-2 text-emerald-600">
-                Explore this track <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
+            return (
+              <div key={track.id} className="border border-gray-200 rounded-[2rem] bg-white flex flex-col h-full relative overflow-visible hover:shadow-lg transition duration-200">
+                <div className={`h-56 flex items-center justify-center relative rounded-t-[2rem] overflow-hidden bg-gradient-to-b ${gradientClass}`}>
+                  <img src={bgImg} alt="bg" className="absolute left-1/2 -translate-x-1/2 top-2/2 -translate-y-1/2 w-[500px] h-[500px] object-contain scale-125 z-0 opacity-50 mix-blend-multiply pointer-events-none" />
+                  <img src={floatImg} alt="icon" className="relative z-10 w-32 h-32 object-contain animate-float drop-shadow-md" style={{ animationDelay: animDelay }} />
+                  <div className="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-white to-transparent z-0"></div>
+                </div>
+                
+                <div className="p-8 flex flex-col flex-grow relative z-10 bg-white rounded-b-[2rem]">
+                  <span className={`text-xs font-bold tracking-wide mb-3 block ${textColor}`}>
+                    {track.tagline.toUpperCase()}
+                  </span>
+                  <h3 className="text-2xl font-semibold mb-4 text-gray-900">{track.name}</h3>
+                  <p className="text-[15px] text-gray-600 mb-8 flex-grow leading-relaxed">
+                    {track.description}
+                  </p>
+                  
+                  <hr className="border-gray-200 mb-4" />
+                  
+                  <p className="text-sm text-gray-500 mb-6 font-medium">
+                    {track.skills.join(' · ')}
+                  </p>
+                  
+                  <Link to={track.explore_link} className={`font-semibold text-[15px] transition hover:opacity-70 flex items-center gap-2 ${textColor}`}>
+                    Explore this track <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         {/* table */}
@@ -230,8 +283,8 @@ const OverviewPage = () => {
       {/* formats */}
       <section id="formats" className="max-w-7xl mx-auto px-6 py-20">
         <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-gray-500 uppercase mb-4">
-              <span className="w-2 h-2 rounded-full bg-blue-500"></span> WAYS TO LEARN
-            </div>
+          <span className="w-2 h-2 rounded-full bg-blue-500"></span> WAYS TO LEARN
+        </div>
         <div className="mb-12">
           <h2 className="text-3xl font-semibold mb-2 text-gray-900">How We Learn</h2>
           <p className="text-gray-600">Different formats for different stages of your journey.</p>
@@ -257,7 +310,7 @@ const OverviewPage = () => {
         </div>
       </section>
 
-      {/*journey*/}
+      {/* journey */}
       <section id="journey" className="bg-white py-20 border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-gray-500 uppercase mb-4">
@@ -322,7 +375,7 @@ const OverviewPage = () => {
         </div>
       </section>
 
-      {/* CTA*/}
+      {/* CTA */}
       <section className="max-w-7xl mx-auto px-6 py-20 pb-28">
         <div className="bg-[#EFF4FF] rounded-[2.5rem] p-10 md:p-16 flex flex-col md:flex-row justify-between items-center gap-8">
           <div>

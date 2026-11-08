@@ -34,3 +34,10 @@ export const getFAQ = async () => {
   const data = await res.json();
   return data.data; 
 };
+
+export const getNavigation = async () => {
+  const res = await fetch(`${API_BASE_URL}/navigation`);
+  if (!res.ok) throw new Error('Failed to fetch navigation links');
+  const data = await res.json();
+  return data.data;
+}

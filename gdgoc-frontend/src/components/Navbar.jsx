@@ -1,24 +1,37 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  
+  // Default links in case the API is slow or fails
+  const [links, setLinks] = useState([
+    { label: 'Home', href: '/' },
+    { label: 'About', href: '/about' },
+    { label: 'Overview', href: '/overview' },
+    { label: 'Contact', href: '/contact' },
+  ])
 
+  useEffect(() => {
+    const fetchNav = async () => {
+      try {
+        const res = await fetch('https://gdgoc-ugm-api.vercel.app/api/navigation');
+        const data = await res.json();
+        if (data.success) {
+          setLinks(data.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch navigation links", error);
+      }
+    };
+    fetchNav();
+  }, []);
 
-  //Navigation Links
-  const links = [
-    { name: 'Home', to: '/' },
-    { name: 'About', to: '/about' },
-    { name: 'Overview', to: '/overview' },
-    { name: 'Contact', to: '/contact' },
-  ]
-
-  // This function dynamically styles the links based on active state
   const navLinkClass = ({ isActive }) =>
     `px-5 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
       isActive
-        ? 'bg-blue-50 text-blue-600' // The blue circle thing when selected
-        : 'text-gray-500 hover:text-gray-900' // Normal state
+        ? 'bg-blue-50 text-blue-600'
+        : 'text-gray-500 hover:text-gray-900'
     }`
 
   return (
@@ -33,7 +46,6 @@ export default function Navbar() {
             className="w-12 h-12 object-contain" 
           />
           
-          {/* Text Stack */}
           <div className="flex flex-col justify-center">
             <span className="text-xl font-semibold text-gray-800 leading-tight">
               Google Developer Groups
@@ -46,19 +58,19 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Navigation Links */}
+        {/* Navigation Links (Mapped from API) */}
         <div className="hidden lg:flex items-center space-x-2">
           {links.map((link) => (
-            <NavLink key={link.name} to={link.to} className={navLinkClass}>
-              {link.name}
+            <NavLink key={link.label} to={link.href} className={navLinkClass}>
+              {link.label}
             </NavLink>
           ))}
         </div>
 
-        {/*Call to Action Button */}
+        {/* CTA Button */}
         <div className="hidden lg:flex">
           <Link 
-            to="/find-track" 
+            to="/overview" 
             className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium flex items-center gap-2 transition-colors"
           >
             Find your track
@@ -68,7 +80,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/*mobile menu button*/}
+        {/* Mobile Menu Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="lg:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-md"
@@ -79,21 +91,21 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* mobile dropdown */}
+      {/* Mobile Dropdown */}
       {isOpen && (
         <div className="lg:hidden px-4 pt-2 pb-4 space-y-1 bg-white border-t border-gray-100">
           {links.map((link) => (
             <NavLink
-              key={link.name}
-              to={link.to}
+              key={link.label}
+              to={link.href}
               className={navLinkClass}
               onClick={() => setIsOpen(false)}
             >
-              {link.name}
+              {link.label}
             </NavLink>
           ))}
           <Link 
-            to="/find-track" 
+            to="/overview" 
             className="mt-4 w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-medium flex items-center justify-center gap-2"
           >
             Find your track
