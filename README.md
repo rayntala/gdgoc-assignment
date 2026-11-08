@@ -5,8 +5,8 @@ A modern, responsive, data-driven frontend application for Google Developer Grou
 
 This project was built to fulfill the open recruitment frontend assignment, focusing on clean UI/UX, seamless routing, and dynamic API consumption.
 
-##**Live Website:** [https://gdgoc-assignment-eight.vercel.app/](https://gdgoc-assignment-eight.vercel.app/)
-##**Drive Linke** https://drive.google.com/drive/folders/1mOSJQOqyLHacg1LIwpip0tLMfef-A_wx 
+## Live Website: ** [https://gdgoc-assignment-eight.vercel.app/](https://gdgoc-assignment-eight.vercel.app/)
+## Drive Link ** https://drive.google.com/drive/folders/1mOSJQOqyLHacg1LIwpip0tLMfef-A_wx 
 
 ## Features
 
