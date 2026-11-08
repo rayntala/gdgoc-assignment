@@ -4,6 +4,7 @@
 A modern, responsive, data-driven frontend application for Google Developer Groups on Campus (GDGoC) Universitas Gadjah Mada.
 
 This project was built to fulfill the open recruitment frontend assignment, focusing on clean UI/UX, seamless routing, and dynamic API consumption.
+**Live Website:** [https://gdgoc-assignment-eight.vercel.app/](https://gdgoc-assignment-eight.vercel.app/)
 
 ## Features
 
