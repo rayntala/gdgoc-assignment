@@ -38,7 +38,7 @@ const AboutPage = () => {
   return (
     <main className="bg-white min-h-screen font-sans">
       
-      {/* 1. HERO SECTION */}
+      {/* hero*/}
       <section className="max-w-7xl mx-auto px-6 py-20 md:py-32 flex flex-col lg:flex-row items-center gap-16">
         <div className="flex-1 max-w-2xl">
           <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-gray-500 uppercase mb-6">
@@ -70,8 +70,6 @@ const AboutPage = () => {
           </div>
         </div>
       </section>
-
-      {/* 2. WHY WE COME TOGETHER */}
       <section className="bg-gray-100 py-24">
         <div className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row gap-12 lg:gap-24">
           <div className="flex-1">
@@ -99,7 +97,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* 3. WHAT GUIDES US (API DATA) */}
+      {/* api data*/}
       <section className="max-w-7xl mx-auto px-6 py-24">
         <div className="mb-12">
           <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-gray-500 uppercase mb-4">
@@ -128,7 +126,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* 4. PEOPLE, NOT LABELS (API DATA) */}
+      {/*people api data */}
       <section className="max-w-7xl mx-auto px-6 pb-24 pt-8">
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
           <div className="flex-1">
@@ -160,7 +158,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* 5. BANNER */}
+      {/* banner */}
       <section className="bg-[#FFFBF0] py-16 border-y border-yellow-100">
         <div className="max-w-7xl mx-auto px-6 flex items-start gap-4 md:gap-6">
           <div className="shrink-0 pt-1">
@@ -179,7 +177,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* 6. CTA SECTION */}
+      {/*cta */}
       <section className="max-w-7xl mx-auto px-6 py-24">
         <div className="bg-[#F0F5FF] rounded-[2.5rem] p-10 md:p-16 flex flex-col md:flex-row justify-between items-center gap-10">
           <div className="max-w-xl">

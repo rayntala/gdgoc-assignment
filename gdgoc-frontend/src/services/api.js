@@ -1,4 +1,3 @@
-// src/services/api.js
 const API_BASE_URL = 'https://gdgoc-ugm-api.vercel.app/api';
 
 export const getTracks = async () => {
@@ -27,4 +26,11 @@ export const getRoles = async () => {
   if (!res.ok) throw new Error('Failed to fetch roles');
   const data = await res.json();
   return data.data;
+};
+
+export const getFAQ = async () => {
+  const res = await fetch(`${API_BASE_URL}/faqs`);
+  if (!res.ok) throw new Error('Failed to fetch FAQs');
+  const data = await res.json();
+  return data.data; 
 };
